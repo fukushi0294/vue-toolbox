@@ -5,9 +5,13 @@
 
 <script>
 export default {
-    name: 'Dashboard',
+    name: "Login",
     data() {
         return {}
     }
 }
 </script>
+
+<style scoped>
+
+</style>

@@ -1,13 +1,13 @@
 <template>
-  <v-container>
-  </v-container>
+    <v-container>
+    </v-container>
 </template>
 
 <script>
-  export default {
+export default {
     name: 'Settings',
-    data: () => ({
-
-    }),
-  }
+    data() {
+        return {}
+    }
+}
 </script>
