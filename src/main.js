@@ -3,6 +3,10 @@ import App from './components/App.vue';
 import router from './router';
 import store from './store';
 import vuetify from './plugins/vuetify';
+import Amplify from 'aws-amplify';
+import awsConfig from './aws-exports';
+
+Amplify.configure(awsConfig);
 
 Vue.config.productionTip = false;
 

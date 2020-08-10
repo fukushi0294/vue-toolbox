@@ -10,6 +10,11 @@
             "StackName": "amplify-vuetoolbox-dev-234820",
             "StackId": "arn:aws:cloudformation:ap-northeast-1:130780428234:stack/amplify-vuetoolbox-dev-234820/5ea080b0-da4f-11ea-b4ea-0ef20c62874e",
             "AmplifyAppId": "d1nwpg2p4n5sqi"
+        },
+        "categories": {
+            "auth": {
+                "vuetoolbox3922d970": {}
+            }
         }
     }
 }
