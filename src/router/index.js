@@ -42,7 +42,7 @@ function isAuthRequiredPath(path) {
 }
 
 function isUserLoggedIn() {
-    return AuthContext.isLoggedIn();
+    return AuthContext.loggedIn;
 }
 
 export default router

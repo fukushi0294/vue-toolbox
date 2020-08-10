@@ -18,7 +18,7 @@ export default {
     },
     computed: {
         isLoggedIn(){
-            return AuthContext.isLoggedIn();
+            return AuthContext.loggedIn;
         }
     }
 };

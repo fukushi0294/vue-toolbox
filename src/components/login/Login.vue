@@ -2,25 +2,12 @@
     <v-container fluid>
         <v-row justify="center">
             <v-col cols="2">
-                <v-card >
-                    <v-card-actions>
-                        <v-form ref="form">
-                            <v-text-field
-                                    class="ml-8 mr-8"
-                                    label="E-mail"
-                                    required/>
-                            <v-text-field
-                                    class="ml-8 mr-8"
-                                    label="Password"
-                                    required/>
-                            <v-btn
-                                    color="success"
-                                    class="mr-4"
-                            >
-                                Sign In
-                            </v-btn>
-                        </v-form>
-                    </v-card-actions>
+                <v-card>
+                    <v-layout justify-center>
+                        <v-card-actions>
+                            <LoginForm/>
+                        </v-card-actions>
+                    </v-layout>
                 </v-card>
             </v-col>
         </v-row>
@@ -28,8 +15,13 @@
 </template>
 
 <script>
+import LoginForm from "./organism/LoginForm";
+
 export default {
     name: "Login",
+    components: {
+        LoginForm
+    },
     data() {
         return {}
     }
