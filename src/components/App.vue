@@ -1,9 +1,15 @@
 <template>
     <v-app>
-        <v-app>
-            <Drawer v-if="this.authenticated"/>
-            <router-view/>
-        </v-app>
+        <v-container>
+            <v-row no-gutters>
+                <v-col cols="2">
+                    <Drawer v-if="this.authenticated"/>
+                </v-col>
+                <v-col>
+                    <router-view/>
+                </v-col>
+            </v-row>
+        </v-container>
     </v-app>
 </template>
 
@@ -17,7 +23,7 @@ export default {
         Drawer
     },
     computed: {
-        ...mapState('auth',["authenticated"])
+        ...mapState('auth', ["authenticated"])
     }
 };
 </script>

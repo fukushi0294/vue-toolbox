@@ -41,6 +41,9 @@ function isAuthRequiredPath(path) {
 }
 
 async function isUserLoggedIn() {
+    if(Vue.prototype.$store.state.auth.authenticated){
+        return true;
+    }
     const credentials = await Auth.currentCredentials();
     return credentials.authenticated;
 }
