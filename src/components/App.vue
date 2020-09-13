@@ -1,7 +1,7 @@
 <template>
     <v-app>
         <v-app>
-            <Drawer v-if="isLoggedIn"/>
+            <Drawer v-if="this.authenticated"/>
             <router-view/>
         </v-app>
     </v-app>
@@ -9,7 +9,7 @@
 
 <script>
 import Drawer from "./Drawer";
-import AuthContext from "../router/AuthContext";
+import {mapState} from "vuex";
 
 export default {
     name: 'App',
@@ -17,9 +17,7 @@ export default {
         Drawer
     },
     computed: {
-        isLoggedIn(){
-            return AuthContext.loggedIn;
-        }
+        ...mapState('auth',["authenticated"])
     }
 };
 </script>

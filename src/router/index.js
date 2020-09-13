@@ -1,10 +1,9 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-
-import Login from "../components/login/Login";
 import Dashboard from "../components/dashboard/Dashboard";
 import Settings from "../components/settings/Settings";
-import AuthContext from "./AuthContext";
+import AuthTemplate from "../components/login/AuthTemplate";
+import {Auth} from "aws-amplify";
 
 Vue.use(VueRouter);
 
@@ -13,7 +12,7 @@ const routes = [
         path: '/', redirect: '/login'
     },
     {
-        path: "/login", component: Login
+        path: "/login", component: AuthTemplate
     },
     {
         path: "/dashboard", component: Dashboard, meta: {requiresAuth: true}
@@ -35,14 +34,15 @@ router.beforeEach((to, from, next) => {
     } else {
         next();
     }
-})
+});
 
 function isAuthRequiredPath(path) {
     return path.matched.some(record => record.meta.requiresAuth);
 }
 
-function isUserLoggedIn() {
-    return AuthContext.loggedIn;
+async function isUserLoggedIn() {
+    const credentials = await Auth.currentCredentials();
+    return credentials.authenticated;
 }
 
 export default router

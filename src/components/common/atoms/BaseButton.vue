@@ -3,7 +3,7 @@
         <v-btn
                 class="mb-4"
                 color="indigo darken-1"
-                @click="test"
+                @click="$emit('click')"
         >
             <span class="base-button-text">{{ text }}</span>
         </v-btn>
