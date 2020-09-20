@@ -1,9 +1,11 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Dashboard from "../components/dashboard/Dashboard";
-import Settings from "../components/settings/Settings";
-import AuthTemplate from "../components/login/AuthTemplate";
+import Dashboard from "../components/pages/Dashboard";
+import Settings from "../components/pages/Settings";
+import AuthTemplate from "../components/pages/AuthTemplate";
 import {Auth} from "aws-amplify";
+import Notes from "../components/pages/Notes";
+import Schedules from "../components/pages/Schedules";
 
 Vue.use(VueRouter);
 
@@ -16,6 +18,12 @@ const routes = [
     },
     {
         path: "/dashboard", component: Dashboard, meta: {requiresAuth: true}
+    },
+    {
+        path: "/notes", component: Notes, meta: {requiresAuth: true}
+    },
+    {
+        path: "/schedules", component: Schedules, meta: {requiresAuth: true}
     },
     {
         path: "/settings", component: Settings, meta: {requiresAuth: true}

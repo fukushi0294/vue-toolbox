@@ -1,0 +1,6 @@
+type Record @model {
+  id: ID!
+  start: String!
+  end: String!
+  break: String
+}

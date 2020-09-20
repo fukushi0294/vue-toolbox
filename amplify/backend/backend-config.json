@@ -6,5 +6,22 @@
 			"dependsOn": [],
 			"customAuth": false
 		}
+	},
+	"api": {
+		"vuetoolbox": {
+			"service": "AppSync",
+			"providerPlugin": "awscloudformation",
+			"output": {
+				"authConfig": {
+					"defaultAuthentication": {
+						"authenticationType": "AMAZON_COGNITO_USER_POOLS",
+						"userPoolConfig": {
+							"userPoolId": "authvuetoolbox3922d970"
+						}
+					},
+					"additionalAuthenticationProviders": []
+				}
+			}
+		}
 	}
 }

@@ -42,6 +42,8 @@ export default {
         return {
             items: [
                 {title: 'Dashboard', icon: 'mdi-view-dashboard'},
+                {title: 'Notes', icon: 'mdi-check'},
+                {title: 'Schedule', icon: 'mdi-calendar'},
                 {title: 'Settings', icon: 'mdi-image'}
             ],
         }
