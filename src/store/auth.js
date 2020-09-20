@@ -4,7 +4,7 @@ export default {
     namespaced: true,
     state: {
         authenticated: false,
-        user: null,
+        username: null,
         userId: '',
         token: ''
     },
@@ -12,8 +12,8 @@ export default {
         isAuthenticated(state, data) {
             state.authenticated = data;
         },
-        setUser(state, data) {
-            state.user = data;
+        setUser(state, cognitoUser) {
+            state.username = cognitoUser.username;
         }
     },
     actions: {

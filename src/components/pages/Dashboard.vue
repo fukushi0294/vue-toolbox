@@ -2,22 +2,16 @@
     <v-container>
         <v-data-table
             :headers="headers"
-            :items="records"
+            :items="Object.values(dateRecordsMap)"
             item-key="date"
             class="elevation-1"
             :search="search"
+            disable-pagination
+            hide-default-footer
+            @click:row="onRowItemClicked"
         >
             <template v-slot:top>
                 <v-text-field v-model="search" label="Search (UPPER CASE ONLY)" class="mx-4"></v-text-field>
-            </template>
-            <template v-slot:body.append>
-                <tr>
-                    <td></td>
-                    <td>
-                        <v-text-field v-model="calories" type="number" label="Less than"></v-text-field>
-                    </td>
-                    <td colspan="4"></td>
-                </tr>
             </template>
         </v-data-table>
     </v-container>
@@ -26,6 +20,7 @@
 <script>
 import {API, graphqlOperation} from 'aws-amplify';
 import {listRecords} from "../../graphql/queries";
+import moment from "moment";
 
 export default {
     name: 'Dashboard',
@@ -33,48 +28,48 @@ export default {
         return {
             search: '',
             calories: '',
-            records: [
-                {
-                    date: '2020-08-01',
-                    start: "09:00",
-                    end: "17:00",
-                    break: 60,
-                    sum: 480,
-                },
-                {
-                    date: '2020-08-02',
-                    start: "09:00",
-                    end: "17:00",
-                    break: 60,
-                    sum: 480,
-                },
-                {
-                    date: '2020-08-03',
-                    start: "09:00",
-                    end: "17:00",
-                    break: 60,
-                    sum: 480,
-                }
-            ],
+            records: {},
+            dateRecordsMap: {}
         }
     },
     async mounted() {
+        this.initializeTimeRecords();
         const records = await API.graphql(graphqlOperation(listRecords));
-        if(Array.isArray(records)){
-            this.records = records.map(record => {
-                return {
-                    date: record.id,
+        if (Array.isArray(records)) {
+            records.forEach(record => {
+                const key = record.date;
+                this.dateRecordsMap[key] = {
+                    date: record.date,
                     start: record.start,
                     end: record.end,
                     break: record.break,
                     sum: this.getTotalTime(record)
-                };
+                }
             });
         }
     },
     methods: {
+        initializeTimeRecords() {
+            const now = moment();
+            const range = Array.from({length: now.daysInMonth()}, (_, i) => ++i);
+            this.dateRecordsMap = range.reduce((map, day) => {
+                const date = `${now.year()}-${now.month() + 1}-${day}`;
+                const key = moment(date).format("YYYY/MM/DD");
+                map[key] = {
+                    date: key,
+                    start: null,
+                    end: null,
+                    break: null,
+                    sum: null
+                };
+                return map;
+            }, {});
+        },
         getTotalTime(record) {
             return record.end - record.start - record.sum;
+        },
+        onRowItemClicked(item) {
+            alert("clicked");
         }
     },
     computed: {
