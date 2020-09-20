@@ -1,15 +1,11 @@
 <template>
     <v-app>
-        <v-container>
-            <v-row no-gutters>
-                <v-col cols="2">
-                    <Drawer v-if="this.authenticated"/>
-                </v-col>
-                <v-col>
-                    <router-view/>
-                </v-col>
-            </v-row>
-        </v-container>
+        <Drawer v-if="authenticated"/>
+        <v-main>
+            <v-container fluid>
+                <router-view></router-view>
+            </v-container>
+        </v-main>
     </v-app>
 </template>
 

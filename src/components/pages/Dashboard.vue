@@ -60,15 +60,17 @@ export default {
     },
     async mounted() {
         const records = await API.graphql(graphqlOperation(listRecords));
-        this.records = records.map(record => {
-            return {
-                date: record.id,
-                start: record.start,
-                end: record.end,
-                break: record.break,
-                sum: this.getTotalTime(record)
-            };
-        });
+        if(Array.isArray(records)){
+            this.records = records.map(record => {
+                return {
+                    date: record.id,
+                    start: record.start,
+                    end: record.end,
+                    break: record.break,
+                    sum: this.getTotalTime(record)
+                };
+            });
+        }
     },
     methods: {
         getTotalTime(record) {

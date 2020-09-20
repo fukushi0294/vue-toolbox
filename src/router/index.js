@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import store from "../store";
 import Dashboard from "../components/pages/Dashboard";
 import Settings from "../components/pages/Settings";
 import AuthTemplate from "../components/pages/AuthTemplate";
@@ -49,7 +50,7 @@ function isAuthRequiredPath(path) {
 }
 
 async function isUserLoggedIn() {
-    if(Vue.prototype.$store.state.auth.authenticated){
+    if (store.state.auth.authenticated) {
         return true;
     }
     const credentials = await Auth.currentCredentials();
