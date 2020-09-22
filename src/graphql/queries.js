@@ -5,6 +5,7 @@ export const getRecord = /* GraphQL */ `
   query GetRecord($id: ID!) {
     getRecord(id: $id) {
       id
+      date
       start
       end
       break
@@ -22,6 +23,7 @@ export const listRecords = /* GraphQL */ `
     listRecords(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        date
         start
         end
         break

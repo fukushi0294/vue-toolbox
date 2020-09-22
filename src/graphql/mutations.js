@@ -8,6 +8,7 @@ export const createRecord = /* GraphQL */ `
   ) {
     createRecord(input: $input, condition: $condition) {
       id
+      date
       start
       end
       break
@@ -23,6 +24,7 @@ export const updateRecord = /* GraphQL */ `
   ) {
     updateRecord(input: $input, condition: $condition) {
       id
+      date
       start
       end
       break
@@ -38,6 +40,7 @@ export const deleteRecord = /* GraphQL */ `
   ) {
     deleteRecord(input: $input, condition: $condition) {
       id
+      date
       start
       end
       break

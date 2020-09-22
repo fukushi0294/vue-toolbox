@@ -3,7 +3,7 @@
         <v-container>
             <v-data-table
                 :headers="headers"
-                :items="Object.values(dateRecordsMap)"
+                :items="Object.values(syncData)"
                 item-key="date"
                 class="elevation-1"
                 disable-pagination
@@ -17,10 +17,9 @@
 </template>
 
 <script>
-import {API, graphqlOperation} from 'aws-amplify';
-import {listRecords} from "../../graphql/queries";
 import moment from "moment";
 import CrudMenu from "../organisms/CrudMenu";
+import {mapActions, mapState} from "vuex";
 
 export default {
     name: 'Dashboard',
@@ -33,6 +32,7 @@ export default {
         }
     },
     computed: {
+        ...mapState("attendance", ["attendanceItemMap"]),
         headers() {
             return [
                 {text: 'Date', align: 'start', sortable: false, value: 'date'},
@@ -41,27 +41,25 @@ export default {
                 {text: 'break time', value: 'break'},
                 {text: 'sum', value: 'sum'},
             ]
+        },
+        syncData() {
+            const storeData = this.attendanceItemMap;
+            if (storeData.size !== 0) {
+                storeData.forEach((value, key) =>
+                    this.dateRecordsMap[[key]] = value
+                );
+            }
+            return this.dateRecordsMap;
         }
     },
-    async mounted() {
-        this.initializeTimeRecords();
-        const records = await API.graphql(graphqlOperation(listRecords));
-        if (Array.isArray(records)) {
-            records.forEach(record => {
-                const key = record.date;
-                this.dateRecordsMap[key] = {
-                    date: record.date,
-                    start: record.start,
-                    end: record.end,
-                    break: record.break,
-                    sum: this.getTotalTime(record)
-                }
-            });
-        }
+    mounted() {
+        const now = moment();
+        this.initializeTimeRecords(now);
+        this.loadRecordByMonth({month: now.month() + 1});
     },
     methods: {
-        initializeTimeRecords() {
-            const now = moment();
+        ...mapActions("attendance", ["loadRecordByMonth"]),
+        initializeTimeRecords(now) {
             const range = Array.from({length: now.daysInMonth()}, (_, i) => ++i);
             this.dateRecordsMap = range.reduce((map, day) => {
                 const date = `${now.year()}-${now.month() + 1}-${day}`;
@@ -75,9 +73,6 @@ export default {
                 };
                 return map;
             }, {});
-        },
-        getTotalTime(record) {
-            return record.end - record.start - record.sum;
         },
         onRowItemClicked(item) {
             this.$refs["crud-menu"].open(item.date);

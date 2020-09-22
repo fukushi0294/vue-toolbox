@@ -5,6 +5,7 @@ export const onCreateRecord = /* GraphQL */ `
   subscription OnCreateRecord {
     onCreateRecord {
       id
+      date
       start
       end
       break
@@ -17,6 +18,7 @@ export const onUpdateRecord = /* GraphQL */ `
   subscription OnUpdateRecord {
     onUpdateRecord {
       id
+      date
       start
       end
       break
@@ -29,6 +31,7 @@ export const onDeleteRecord = /* GraphQL */ `
   subscription OnDeleteRecord {
     onDeleteRecord {
       id
+      date
       start
       end
       break
