@@ -1,35 +1,46 @@
 <template>
-    <v-container>
-        <v-data-table
-            :headers="headers"
-            :items="Object.values(dateRecordsMap)"
-            item-key="date"
-            class="elevation-1"
-            :search="search"
-            disable-pagination
-            hide-default-footer
-            @click:row="onRowItemClicked"
-        >
-            <template v-slot:top>
-                <v-text-field v-model="search" label="Search (UPPER CASE ONLY)" class="mx-4"></v-text-field>
-            </template>
-        </v-data-table>
-    </v-container>
+    <div>
+        <v-container>
+            <v-data-table
+                :headers="headers"
+                :items="Object.values(dateRecordsMap)"
+                item-key="date"
+                class="elevation-1"
+                disable-pagination
+                hide-default-footer
+                @click:row="onRowItemClicked"
+            >
+            </v-data-table>
+        </v-container>
+        <crud-menu ref="crud-menu"></crud-menu>
+    </div>
 </template>
 
 <script>
 import {API, graphqlOperation} from 'aws-amplify';
 import {listRecords} from "../../graphql/queries";
 import moment from "moment";
+import CrudMenu from "../organisms/CrudMenu";
 
 export default {
     name: 'Dashboard',
+    components: {
+        CrudMenu
+    },
     data() {
         return {
-            search: '',
-            calories: '',
-            records: {},
             dateRecordsMap: {}
+        }
+    },
+    computed: {
+        headers() {
+            return [
+                {text: 'Date', align: 'start', sortable: false, value: 'date'},
+                {text: 'start time', value: 'start'},
+                {text: 'end time', value: 'end'},
+                {text: 'break time', value: 'break'},
+                {text: 'sum', value: 'sum'},
+            ]
         }
     },
     async mounted() {
@@ -69,19 +80,8 @@ export default {
             return record.end - record.start - record.sum;
         },
         onRowItemClicked(item) {
-            alert("clicked");
+            this.$refs["crud-menu"].open(item.date);
         }
-    },
-    computed: {
-        headers() {
-            return [
-                {text: 'Date', align: 'start', sortable: false, value: 'date'},
-                {text: 'start time', value: 'start'},
-                {text: 'end time', value: 'end'},
-                {text: 'break time', value: 'break'},
-                {text: 'sum', value: 'sum'},
-            ]
-        },
     }
 }
 </script>
